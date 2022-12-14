@@ -9,13 +9,27 @@ interface Itodo {
 
 let todos: Itodo[] = []
 
+const createTodo = async (newTodo: Itodo) => {
+    const res = await fetch('http://localhost:3001/todos', {
+      method: 'POST', 
+      headers: {
+        'content-Type': 'application/json',
+      },
+      body: JSON.stringify(newTodo),
+    })
+
+    if (!res.ok) {
+      throw new Error(`${res.status} ${res.statusText}`)
+    }
+  
+   return await res.json() as Itodo
+}
+
 const fetchTodos = async () => {
   const res = await fetch('http://localhost:3001/todos')
   if (!res.ok) {
     throw new Error(`${res.status} ${res.statusText}`)
   }
-
- //const data = await res.json() as Itodo[]
 
  return await res.json() as Itodo[]
 }
@@ -23,7 +37,6 @@ const fetchTodos = async () => {
 const getTodos = async () => {
 
   todos = await fetchTodos()
-  console.log(todos)
 
   renderTodos()
 }
@@ -41,7 +54,7 @@ const renderTodos = () => {
   .join('')
 }
 
-document.querySelector('#new-todo-form')?.addEventListener('submit', e => {
+document.querySelector('#new-todo-form')?.addEventListener('submit', async e => {
   e.preventDefault
 
   const newTodoTitle = document.querySelector<HTMLInputElement>('#newTodo')?.value
@@ -51,9 +64,12 @@ document.querySelector('#new-todo-form')?.addEventListener('submit', e => {
   }
 
   const newTodo: Itodo = {
-    title: newTodoTitle,
+    title: newTodoTitle, 
     completed: false,
   }
+
+ await createTodo(newTodo)
+
   getTodos()
 })
 
