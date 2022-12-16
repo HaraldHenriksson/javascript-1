@@ -1,38 +1,10 @@
 import 'bootstrap/dist/css/bootstrap.css'
 import './style.css'
-
-interface Itodo {
-  id?: number,
-  title: string,
-  completed: boolean,
-}
+import { createTodo } from './api'
+import { fetchTodos } from './api'
+import { Itodo } from './api'
 
 let todos: Itodo[] = []
-
-const createTodo = async (newTodo: Itodo) => {
-    const res = await fetch('http://localhost:3001/todos', {
-      method: 'POST', 
-      headers: {
-        'content-Type': 'application/json',
-      },
-      body: JSON.stringify(newTodo),
-    })
-
-    if (!res.ok) {
-      throw new Error(`${res.status} ${res.statusText}`)
-    }
-  
-   return await res.json() as Itodo
-}
-
-const fetchTodos = async () => {
-  const res = await fetch('http://localhost:3001/todos')
-  if (!res.ok) {
-    throw new Error(`${res.status} ${res.statusText}`)
-  }
-
- return await res.json() as Itodo[]
-}
 
 const getTodos = async () => {
 
