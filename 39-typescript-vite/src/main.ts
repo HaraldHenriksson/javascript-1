@@ -11,24 +11,9 @@ type Todo = {
   completed: boolean,
 }
 
-const todos: Todo[] = [
-  {
-    id: 1,
-    title: "Learn basic javascript",
-    completed: true,
-  },
-  {
-    id: 2,
-    title: "Learn advanced javascript",
-    completed: true,
-  },
-  {
-    id: 3,
-    title: "Learn basic typescript",
-    completed: false,
-  }
-];
-console.log(todos)
+const json = localStorage.getItem('todos') ?? '[]';
+
+const todos: Todo[] = JSON.parse(json)
 
 const renderTodos = () => {
   todosList.innerHTML = '';
@@ -64,7 +49,7 @@ if (newTodoTitle.length < 3) {
 }
 
 const todoIds = todos.map(todo => todo.id)
-const maxId = Math.max(...todoIds)
+const maxId = Math.max(0, ...todoIds)
 
 const newTodo: Todo = {
   id: maxId +1,
