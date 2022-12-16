@@ -47,6 +47,13 @@ const renderTodos = () => {
             .join('');
 }
 
+const saveTodos = () => {
+
+  const json = JSON.stringify(todos)
+
+  localStorage.setItem('todos', json)
+}
+
 newTodoForm.addEventListener('submit', e => {
 e.preventDefault()
 
@@ -66,6 +73,8 @@ const newTodo: Todo = {
  }
  todos.push(newTodo)
 
+ saveTodos();
+
 document.querySelector<HTMLInputElement>('#new-todo-title')!.value = '';
 
 renderTodos();
@@ -81,6 +90,8 @@ todosList.addEventListener('click', e => {
 
     if (foundTodo) {
       foundTodo.completed = !foundTodo.completed
+
+      saveTodos();
     }
 
     renderTodos();
