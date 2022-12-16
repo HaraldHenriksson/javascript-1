@@ -54,6 +54,41 @@ const renderTodos = () => {
   .join('')
 }
 
+const updateTodo = async (todoId: number, data: object) => {
+  const res = await fetch(`http://localhost:3001/todos/${todoId}`, {//added todoID.id
+      method: 'PATCH',
+      headers: {
+          'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(data),
+  })
+ if (!res.ok) {
+  throw new Error(`Could not update todos, reason: ${res.status}${res.statusText}`)
+ } 
+  return await res.json()
+}
+
+document.querySelector('#todos')?.addEventListener('click', async (e) => {
+  e.preventDefault
+
+    const target = e.target as HTMLUListElement
+
+    if(target.tagName === "LI") {
+      const todoId: number = Number(target.dataset.setId)
+
+      const foundTodo: any = todos.find( (todo) => {
+        console.log(todo.id)
+        return todo.id === todoId
+      })
+
+      await updateTodo(foundTodo.id as number,{completed: !foundTodo.completed})
+     // console.log(foundTodo)
+      
+
+      
+    }
+})
+
 document.querySelector('#new-todo-form')?.addEventListener('submit', async e => {
   e.preventDefault
 
