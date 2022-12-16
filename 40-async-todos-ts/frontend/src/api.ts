@@ -1,9 +1,3 @@
-export interface Itodo {
-    id?: number,
-    title: string,
-    completed: boolean,
-  }
-
 export const createTodo = async (newTodo: Itodo) => {
     const res = await fetch('http://localhost:3001/todos', {
       method: 'POST', 

@@ -1,8 +1,7 @@
 import 'bootstrap/dist/css/bootstrap.css'
 import './style.css'
-import { createTodo } from './api'
-import { fetchTodos } from './api'
-import { Itodo } from './api'
+import { createTodo, fetchTodos } from './api'
+import { Itodo } from './interface'
 
 let todos: Itodo[] = []
 
